@@ -1,3 +1,4 @@
+
 title My Game
 author My Name Here
 homepage www.puzzlescript.net
@@ -29,7 +30,12 @@ black white blue transparent orange
 32323
 
 Crate
-orange
+transparent lightblue
+00000
+11111
+01110
+01110
+01110
 
 =======
 LEGEND
@@ -79,7 +85,8 @@ LEVELS
 #########
 #.......#
 #.......#
-#.*.p...#
-#.......#
-#o.....#
+#.p*....#
+#.###...#
+#o.....##
 #########
+
