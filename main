@@ -1,0 +1,85 @@
+title My Game
+author My Name Here
+homepage www.puzzlescript.net
+
+========
+OBJECTS
+========
+
+Background
+green
+
+Target
+black white blue transparent gray
+03333
+11143
+11404
+11404
+11143
+
+Wall
+brown
+
+Player
+black white blue transparent orange
+30003
+34443
+11111
+32223
+32323
+
+Crate
+orange
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+P = Player
+* = Crate
+@ = Crate and Target
+O = Target
+
+Object = player or wall or crate
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Target
+Player, Wall, Crate
+
+======
+RULES
+======
+
+[ > Player | Crate ] -> [ > Player | > Crate ]
+
+
+[moving Player] -> [moving Player] again
+random down [ Player | no Object ] -> [ | Player ] again
+random down [ Crate | no Object no Player ] -> [ | Crate ] again
+==============
+WINCONDITIONS
+==============
+
+all Target on Crate
+
+=======
+LEVELS
+=======
+
+#########
+#.......#
+#.......#
+#.*.p...#
+#.......#
+#o.....#
+#########
