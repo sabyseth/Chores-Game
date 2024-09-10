@@ -2,13 +2,13 @@
 title My Game
 author My Name Here
 homepage www.puzzlescript.net
- 
+
 ========
 OBJECTS
 ========
 
 Background
-green
+lightblue
 
 Target
 black white blue transparent gray
@@ -19,7 +19,17 @@ black white blue transparent gray
 11143
 
 Wall
-brown
+lightgray
+
+Background2
+yellow lightblue
+01110
+10001
+00000
+10001
+01110
+
+
 
 Player
 black white blue transparent orange
@@ -30,7 +40,7 @@ black white blue transparent orange
 32323
 
 Crate
-transparent lightblue
+transparent lightgreen
 00000
 11111
 01110
@@ -47,6 +57,7 @@ P = Player
 * = Crate
 @ = Crate and Target
 O = Target
+& = Background2
 
 Object = player or wall or crate
 
@@ -59,6 +70,7 @@ COLLISIONLAYERS
 ================
 
 Background
+Background2
 Target
 Player, Wall, Crate
 
@@ -83,7 +95,7 @@ LEVELS
 =======
 
 #########
-#.......#
+#......&#
 #.......#
 #.p*....#
 #.###...#
