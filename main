@@ -1,4 +1,5 @@
 
+
 title My Game
 author My Name Here
 homepage www.puzzlescript.net
@@ -18,8 +19,6 @@ black white blue transparent gray
 11404
 11143
 
-TreasureGet 
-yellow
 
 Wall
 lightgray red
@@ -36,7 +35,8 @@ yellow lightblue
 10001
 01110
 
-
+Box
+brown
 
 Player
 black white blue transparent orange
@@ -47,33 +47,14 @@ black white blue transparent orange
 32323
 
 Crate
-transparent lightgreen
+transparent #95bd37 #22b14c
 00000
-11111
+11211
 01110
 01110
 01110
 
-climbable
-transparent
 
-move_right
-transparent
-
-move_left
-transparent
-
-move_down
-transparent
-
-fall
-transparent
-
-stuck
-transparent
-
-move_up
-transparent
 
 =======
 LEGEND
@@ -83,15 +64,14 @@ LEGEND
 # = Wall
 P = Player
 * = Crate
+$ = Box
 @ = Crate and Target
 O = Target
 & = Background2
 
-Object = player or wall or crate
-faller = player or crate or TreasureGet
-move_marker = move_right or move_left or move_down or move_up
-movable = crate
-fallObstruction = crate or wall or player 
+
+Object = player or wall or crate or Target or Box
+
 
 =======
 SOUNDS
@@ -105,41 +85,22 @@ Background
 Background2
 Target
 Player, Wall, Crate
-TreasureGet
-climbable
-stuck
-move_marker
-fall
 
+Box
 ======
 RULES
 ======
 
-[ > Player | Crate ] -> [ > Player | > Crate ]
-
-[ move_right player ] -> [ right player ]
-[ move_left  player ] -> [ left  player ]
-[move_up Player ] -> [up Player]
-[ move_marker ] -> []
-
-[ climbable ]->[]
-down [ no fallObstruction | wall no climbable ] -> [| wall climbable     ]
-down [ no fallObstruction | stuck movable no climbable | fallObstruction] -> [ | stuck movable climbable | fallObstruction]
-
-right [ right player | climbable ]->[ up player up move_right |]again
-left  [ left  player | climbable ]->[ up player up move_left  | climbable no TreasureGet ] again
-
-
-
-
-([ stuck ]->[]
-horizontal [ wall           | movable no fall no stuck ] -> [ wall   | movable stuck ]
-horizontal [ movable no fall  | movable no fall no stuck ] -> [ movable | movable stuck ]
-horizontal [ stuck          | movable no fall no stuck ] -> [ stuck  | movable stuck ])
+[ > Player | Crate | no Box] -> [ > Player | > Crate |]
 
 [moving Player] -> [moving Player] again
 random down [ Player | no Object ] -> [ | Player ] again
 random down [ Crate | no Object no Player ] -> [ | Crate ] again
+[ > Player | Box ] -> [ > Player | > Box ]
+
+
+
+random down [ Box | no Object no Player no Wall] -> [ | Box ] again
 
 
 
@@ -153,6 +114,20 @@ all Target on Crate
 LEVELS
 =======
 
+#############
+#.....p....&#
+#.....*.....#
+#....###.*..#
+#........$..#
+#..###..##..#
+#...........#
+#...........#
+#...........#
+#.$.........#
+######....###
+######o.$.###
+#############
+
 #########
 #......&#
 #.......#
@@ -160,3 +135,4 @@ LEVELS
 #.###...#
 #o.....##
 #########
+
