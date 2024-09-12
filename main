@@ -1,8 +1,8 @@
-
-
-title My Game
-author My Name Here
+title Chores!
+author Seth, Raferty 
 homepage www.puzzlescript.net
+again_interval .08
+
 
 ========
 OBJECTS
@@ -54,7 +54,20 @@ transparent #95bd37 #22b14c
 01110
 01110
 
+climbable
+transparent
 
+move_right
+transparent
+
+move_left
+transparent
+
+move_down
+transparent
+
+fall
+transparent
 
 =======
 LEGEND
@@ -73,6 +86,13 @@ O = Target
 Object = player or wall or crate or Target or Box
 
 
+fallObstruction = crate or wall or player or Target or box
+
+faller = player or crate or Target
+
+move_marker = move_right or move_left or move_down
+
+
 =======
 SOUNDS
 =======
@@ -86,21 +106,35 @@ Background2
 Target
 Player, Wall, Crate
 
-Box
+box 
+move_marker
+fall
+move_down
+move_right
+move_left
+
+climbable
 ======
 RULES
 ======
 
-[ > Player | Crate | no Box] -> [ > Player | > Crate |]
+[ > Player | Crate | no box ] -> [ > Player | > Crate |] 
 
-[moving Player] -> [moving Player] again
-random down [ Player | no Object ] -> [ | Player ] again
-random down [ Crate | no Object no Player ] -> [ | Crate ] again
-[ > Player | Box ] -> [ > Player | > Box ]
+[ fall faller ] -> [ down faller move_down]
+[ fall ] -> []
 
+[ climbable ]->[]
+down [ no Wall | wall no climbable] -> [ | wall climbable]
 
+[ move_right player ] -> [ right player ]
+[ move_left  player ] -> [ left  player ]
+[ move_marker ] -> []
 
-random down [ Box | no Object no Player no Wall] -> [ | Box ] again
+right [ right player | climbable ]->[ up player up move_right | climbable  ] again
+left  [ left  player | climbable ]->[ up player up move_left  | climbable ] again
+
+late down [ crate no move_marker | no fallObstruction ] -> [ fall crate | ] again
+late down [ player no move_marker | no fallObstruction ] -> [ fall player | ] again
 
 
 
@@ -135,4 +169,3 @@ LEVELS
 #.###...#
 #o.....##
 #########
-
