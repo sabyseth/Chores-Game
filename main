@@ -3,7 +3,6 @@ author Seth, Raferty
 homepage www.puzzlescript.net
 again_interval .08
 
-
 ========
 OBJECTS
 ========
@@ -19,7 +18,6 @@ black white blue transparent gray
 11404
 11143
 
-
 Wall
 lightgray red
 11101
@@ -27,6 +25,7 @@ lightgray red
 10111
 00000
 11101
+
 Background2
 yellow lightblue
 01110
@@ -82,16 +81,15 @@ $ = Box
 O = Target
 & = Background2
 
-
 Object = player or wall or crate or Target or Box
 
+fallObstruction = crate or wall or player or box
 
-fallObstruction = crate or wall or player or Target or box
+faller = player or crate or Target or box
 
-faller = player or crate or Target
+movable = crate or Box
 
 move_marker = move_right or move_left or move_down
-
 
 =======
 SOUNDS
@@ -104,9 +102,8 @@ COLLISIONLAYERS
 Background
 Background2
 Target
-Player, Wall, Crate
+Player, Wall, Crate, Box
 
-box 
 move_marker
 fall
 move_down
@@ -114,29 +111,31 @@ move_right
 move_left
 
 climbable
+
 ======
 RULES
 ======
 
-[ > Player | Crate | no box ] -> [ > Player | > Crate |] 
+[ > Player | Crate ] -> [ > Player | > Crate]
+[ > Player | Box ] -> [ > Player | > Box]
 
 [ fall faller ] -> [ down faller move_down]
 [ fall ] -> []
 
-[ climbable ]->[]
+[ climbable ] -> []
 down [ no Wall | wall no climbable] -> [ | wall climbable]
+down [ no fallObstruction | movable no climbable | fallObstruction] -> [ | movable climbable | fallObstruction]
 
-[ move_right player ] -> [ right player ]
-[ move_left  player ] -> [ left  player ]
+[ move_right Player ] -> [ right Player ]
+[ move_left Player ] -> [ left Player ]
 [ move_marker ] -> []
 
-right [ right player | climbable ]->[ up player up move_right | climbable  ] again
-left  [ left  player | climbable ]->[ up player up move_left  | climbable ] again
+right [ right Player | climbable ] -> [ up Player up move_right | climbable ] again
+left [ left Player | climbable ] -> [ up Player up move_left | climbable  ] again
 
-late down [ crate no move_marker | no fallObstruction ] -> [ fall crate | ] again
-late down [ player no move_marker | no fallObstruction ] -> [ fall player | ] again
-
-
+late down [ Crate no move_marker | no fallObstruction ] -> [ fall Crate | ] again
+late down [ Box no move_marker | no fallObstruction ] -> [ fall Box | ] again
+late down [ Player no move_marker | no fallObstruction ] -> [ fall Player | ] again
 
 ==============
 WINCONDITIONS
@@ -149,7 +148,7 @@ LEVELS
 =======
 
 #############
-#.....p....&#
+#.....P....&#
 #.....*.....#
 #....###.*..#
 #........$..#
@@ -159,13 +158,13 @@ LEVELS
 #...........#
 #.$.........#
 ######....###
-######o.$.###
+######O.$.###
 #############
 
 #########
 #......&#
 #.......#
-#.p*....#
+#.P*....#
 #.###...#
-#o.....##
+#O.....##
 #########
